@@ -72,14 +72,14 @@ public class TypeServiceList implements IEdition<TypeService> {
                 +nameWidth+"s |%n";
 
         // Выводим границу таблицы
-        System.out.println(border.toString());
+        System.out.println(border);
         System.out.format(headerFormat, "id", "Название");
-        System.out.println(border.toString());
+        System.out.println(border);
 
         for (int i = 0; i < typeServiceList.size(); i++) {
             System.out.format(dataFormat, i + 1, typeServiceList.get(i).getName());
 
-            System.out.println(border.toString());
+            System.out.println(border);
         }
     }
 

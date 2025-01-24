@@ -130,9 +130,9 @@ public class SparePartList implements IEdition<SparePart> {
                 +noteWidth+"s |%n";
 
         // Выводим границу таблицы
-        System.out.println(border.toString());
+        System.out.println(border);
         System.out.format(headerFormat, "id", "Название", "Бренд", "Артикул", "адрес", "Примечание");
-        System.out.println(border.toString());
+        System.out.println(border);
 
         for (int i = 0; i < sparePartList.size(); i++) {
             System.out.format(dataFormat,
@@ -144,7 +144,7 @@ public class SparePartList implements IEdition<SparePart> {
                     sparePartList.get(i).getNote()
             );
 
-            System.out.println(border.toString());
+            System.out.println(border);
         }
     }
 

@@ -167,10 +167,10 @@ public class JobList implements IEdition<Job> {
                 +noteWidth+"s |%n";
 
         // Выводим границу таблицы
-        System.out.println(border.toString());
+        System.out.println(border);
         System.out.format(headerFormat, "  ", "                ", "Периодичность", "Планируемая", "Последняя        ", "          ", "Подходящая", "Запчастей", "          ");
         System.out.format(headerFormat, "id", "Вид обслуживания", "по регламенту", "дата       ", "дата обслуживания", "Количество", "запчасть  ", "в наличии", "Примечание");
-        System.out.println(border.toString());
+        System.out.println(border);
 
         for (int i = 0; i < jobList.size(); i++) {
             System.out.format(
@@ -186,7 +186,7 @@ public class JobList implements IEdition<Job> {
                     jobList.get(i).getNote()
             );
 
-            System.out.println(border.toString());
+            System.out.println(border);
         }
     }
 }

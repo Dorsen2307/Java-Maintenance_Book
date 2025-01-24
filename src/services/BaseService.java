@@ -1,6 +1,5 @@
 package services;
 
-import db.JobList;
 import db.SparePartList;
 import db.TypeServiceList;
 import interfaces.IBaseService;
@@ -13,6 +12,9 @@ import models.TypeService;
 import java.util.Scanner;
 
 public abstract class BaseService<T> implements IBaseService<T> {
+    /**
+     * Выводит вторичное меню, которое указывает допустимые действия для редактирования списков
+     */
     public void getSecondMenu() {
         String textMenu = "1-Добавить\t2-Удалить\t3-Править\t0-Назад";
         System.out.println("--------------------------------------------");

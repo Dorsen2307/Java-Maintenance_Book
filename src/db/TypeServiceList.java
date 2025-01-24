@@ -43,9 +43,43 @@ public class TypeServiceList implements IEdition<TypeService> {
 
     @Override
     public void view() {
-        System.out.println("\nid\tИмя");
+        // Определяем минимальные ширины для каждого столбца
+        int idWidth = 2;
+        int nameWidth = 8;
+
+        // Инициализируем максимальные ширины
         for (int i = 0; i < typeServiceList.size(); i++) {
-            System.out.println(i + 1 + "\t" + typeServiceList.get(i).getName());
+            idWidth = Math.max(idWidth, String.valueOf(i + 1).length());
+            nameWidth = Math.max(nameWidth, typeServiceList.get(i).getName().length());
+        }
+
+        // Генерация границы таблицы
+        Integer[] widthList = new Integer[]{
+                idWidth,
+                nameWidth,
+        };
+        StringBuilder border = new StringBuilder("+");
+        for (int width : widthList) {
+            border.append("-".repeat(width + 2));
+            border.append("+");
+        }
+
+        String headerFormat = "| %-"
+                +idWidth+"s | %-"
+                +nameWidth+"s |%n";
+        String dataFormat = "| %-"
+                +idWidth+"d | %-"
+                +nameWidth+"s |%n";
+
+        // Выводим границу таблицы
+        System.out.println(border.toString());
+        System.out.format(headerFormat, "id", "Название");
+        System.out.println(border.toString());
+
+        for (int i = 0; i < typeServiceList.size(); i++) {
+            System.out.format(dataFormat, i + 1, typeServiceList.get(i).getName());
+
+            System.out.println(border.toString());
         }
     }
 

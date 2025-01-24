@@ -81,16 +81,70 @@ public class SparePartList implements IEdition<SparePart> {
 
     @Override
     public void view() {
-        System.out.println("\nid\tИмя\tФирма\tКод\tАдрес\tПримечание");
+        // Определяем минимальные ширины для каждого столбца
+        int idWidth = 2;
+        int nameWidth = 8;
+        int brandWidth = 5;
+        int codeWidth = 7;
+        int addressWidth = 5;
+        int noteWidth = 10;
+
+        // Инициализируем максимальные ширины
         for (int i = 0; i < sparePartList.size(); i++) {
-            System.out.println(
-                    i + 1 + "\t"
-                    + sparePartList.get(i).getName() + "\t"
-                    + sparePartList.get(i).getBrand() + "\t"
-                    + sparePartList.get(i).getCode() + "\t"
-                    + sparePartList.get(i).getAddress() + "\t"
-                    + sparePartList.get(i).getNote()
+            idWidth = Math.max(idWidth, String.valueOf(i + 1).length());
+            nameWidth = Math.max(nameWidth, sparePartList.get(i).getName().length());
+            brandWidth = Math.max(brandWidth, sparePartList.get(i).getBrand().length());
+            codeWidth = Math.max(codeWidth, sparePartList.get(i).getCode().length());
+            addressWidth = Math.max(addressWidth, sparePartList.get(i).getAddress().length());
+            noteWidth = Math.max(noteWidth, sparePartList.get(i).getNote().length());
+        }
+
+        // Генерация границы таблицы
+        Integer[] widthList = new Integer[]{
+                idWidth,
+                nameWidth,
+                brandWidth,
+                codeWidth,
+                addressWidth,
+                noteWidth
+        };
+        StringBuilder border = new StringBuilder("+");
+        for (int width : widthList) {
+            border.append("-".repeat(width + 2));
+            border.append("+");
+        }
+
+        String headerFormat = "| %-"
+                +idWidth+"s | %-"
+                +nameWidth+"s | %-"
+                +brandWidth+"s | %-"
+                +codeWidth+"s | %-"
+                +addressWidth+"s | %-"
+                +noteWidth+"s |%n";
+        String dataFormat = "| %-"
+                +idWidth+"d | %-"
+                +nameWidth+"s | %-"
+                +brandWidth+"s | %-"
+                +codeWidth+"s | %-"
+                +addressWidth+"s | %-"
+                +noteWidth+"s |%n";
+
+        // Выводим границу таблицы
+        System.out.println(border.toString());
+        System.out.format(headerFormat, "id", "Название", "Бренд", "Артикул", "адрес", "Примечание");
+        System.out.println(border.toString());
+
+        for (int i = 0; i < sparePartList.size(); i++) {
+            System.out.format(dataFormat,
+                    i + 1,
+                    sparePartList.get(i).getName(),
+                    sparePartList.get(i).getBrand(),
+                    sparePartList.get(i).getCode(),
+                    sparePartList.get(i).getAddress(),
+                    sparePartList.get(i).getNote()
             );
+
+            System.out.println(border.toString());
         }
     }
 

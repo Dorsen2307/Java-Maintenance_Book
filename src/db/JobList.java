@@ -103,14 +103,78 @@ public class JobList implements IEdition<Job> {
 
     @Override
     public void view() {
-        System.out.format("+----+------------------+---------------+-------------+-------------------+------------+-------------------+-----------+-----------------+%n");
-        System.out.format("|    |                  | Периодичность | Планируемая | Последняя         |            | Подходящая        | Запчастей |                 |%n");
-        System.out.format("| id | Вид обслуживания | по регламенту | дата        | дата обслуживания | Количество | запчасть          | в наличии | Примечание      |%n");
-        System.out.format("+----+------------------+---------------+-------------+-------------------+------------+-------------------+-----------+-----------------+%n");
-        String leftAlignment = "| %-2d | %-16s | %-13s | %-11s | %-17s | %-10d | %-17s | %-9s | %-15s |%n";
+        // Определяем минимальные ширины для каждого столбца
+        int idWidth = 2;
+        int typeServiceWidth = 16;
+        int periodicityWidth = 13;
+        int plannedDateWidth = 11;
+        int lastServiceDateWidth = 17;
+        int quantityWidth = 10;
+        int sparePartWidth = 10;
+        int sparePartQuantityWidth = 9;
+        int noteWidth = 10;
+
+        // Инициализируем максимальные ширины
+        for (int i = 0; i < jobList.size(); i++) {
+            idWidth = Math.max(idWidth, String.valueOf(i + 1).length());
+            typeServiceWidth = Math.max(typeServiceWidth, jobList.get(i).getTypeService().length());
+            periodicityWidth = Math.max(periodicityWidth, jobList.get(i).getPeriodicityRegulations().length());
+            plannedDateWidth = Math.max(plannedDateWidth, jobList.get(i).getPlannedDate().length());
+            lastServiceDateWidth = Math.max(lastServiceDateWidth, jobList.get(i).getLastServiceDate().length());
+            quantityWidth = Math.max(quantityWidth, String.valueOf(jobList.get(i).getQuantity()).length());
+            sparePartWidth = Math.max(sparePartWidth, jobList.get(i).getSparePart().length());
+            sparePartQuantityWidth = Math.max(sparePartQuantityWidth, String.valueOf(jobList.get(i).getSparePartQuantity()).length());
+            noteWidth = Math.max(noteWidth, jobList.get(i).getNote().length());
+        }
+
+        // Генерация границы таблицы
+        Integer[] widthList = new Integer[]{
+                idWidth,
+                typeServiceWidth,
+                periodicityWidth,
+                plannedDateWidth,
+                lastServiceDateWidth,
+                quantityWidth,
+                sparePartWidth,
+                sparePartQuantityWidth,
+                noteWidth
+        };
+        StringBuilder border = new StringBuilder("+");
+        for (int width : widthList) {
+            border.append("-".repeat(width + 2));
+            border.append("+");
+        }
+
+        String headerFormat = "| %-"
+                +idWidth+"s | %-"
+                +typeServiceWidth+"s | %-"
+                +periodicityWidth+"s | %-"
+                +plannedDateWidth+"s | %-"
+                +lastServiceDateWidth+"s | %-"
+                +quantityWidth+"s | %-"
+                +sparePartWidth+"s | %-"
+                +sparePartQuantityWidth+"s | %-"
+                +noteWidth+"s |%n";
+        String dataFormat = "| %-"
+                +idWidth+"d | %-"
+                +typeServiceWidth+"s | %-"
+                +periodicityWidth+"s | %-"
+                +plannedDateWidth+"s | %-"
+                +lastServiceDateWidth+"s | %-"
+                +quantityWidth+"d | %-"
+                +sparePartWidth+"s | %-"
+                +sparePartQuantityWidth+"d | %-"
+                +noteWidth+"s |%n";
+
+        // Выводим границу таблицы
+        System.out.println(border.toString());
+        System.out.format(headerFormat, "  ", "                ", "Периодичность", "Планируемая", "Последняя        ", "          ", "Подходящая", "Запчастей", "          ");
+        System.out.format(headerFormat, "id", "Вид обслуживания", "по регламенту", "дата       ", "дата обслуживания", "Количество", "запчасть  ", "в наличии", "Примечание");
+        System.out.println(border.toString());
+
         for (int i = 0; i < jobList.size(); i++) {
             System.out.format(
-                    leftAlignment,
+                    dataFormat,
                     i + 1,
                     jobList.get(i).getTypeService(),
                     jobList.get(i).getPeriodicityRegulations(),
@@ -121,7 +185,8 @@ public class JobList implements IEdition<Job> {
                     jobList.get(i).getSparePartQuantity(),
                     jobList.get(i).getNote()
             );
-            System.out.format("+----+------------------+---------------+-------------+-------------------+------------+-------------------+-----------+-----------------+%n");
+
+            System.out.println(border.toString());
         }
     }
 }
